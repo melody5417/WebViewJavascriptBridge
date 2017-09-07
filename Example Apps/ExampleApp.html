@@ -36,6 +36,7 @@
 			else { log.appendChild(el) }
 		}
 
+        <!--Register a handler called handlerName. The ObjC can then call this handler with [bridge callHandler:"handlerName" data:@"Foo"] and [bridge callHandler:"handlerName" data:@"Foo" responseCallback:^(id responseData) { ... }]-->
 		bridge.registerHandler('testJavascriptHandler', function(data, responseCallback) {
 			log('ObjC called testJavascriptHandler with', data)
 			var responseData = { 'Javascript Says':'Right back atcha!' }
@@ -50,6 +51,8 @@
 		callbackButton.onclick = function(e) {
 			e.preventDefault()
 			log('JS calling handler "testObjcCallback"')
+
+            <!--Call an ObjC handler called handlerName. If a responseCallback function is given the ObjC handler can respond.-->
 			bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
 				log('JS got response', response)
 			})
